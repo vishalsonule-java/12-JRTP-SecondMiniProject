@@ -1,21 +1,22 @@
 package com.ashokit.services;
 
-import java.util.List;
 import java.util.Map;
 
 import com.ashokit.entity.User;
+import com.ashokit.model.LoginForm;
+import com.ashokit.model.UnlockAccount;
 
 public interface UserService {
 	
 	public Boolean registerUser(User user);
 	
-	public String checkUserCredentials(String email,String password);
+	public String checkUserCredentials(LoginForm loginForm);
 	
 	public String generateTemporaryPassword();
 	
-	public String unlockAccount(String email,String tempPassword,String password);
+	public String unlockAccount(UnlockAccount acc);
 	
-	public Boolean recoverPassword(String email);
+	public String recoverPassword(String email);
 	
 	public Map<Integer,String> getCountries();
 	

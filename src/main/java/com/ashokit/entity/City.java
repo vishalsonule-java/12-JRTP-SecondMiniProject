@@ -15,6 +15,11 @@ import lombok.Data;
 @Table(name = "CITY_MASTER")
 public class City implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6848572846958111985L;
+
 	@Id
 	@GeneratedValue
 	@Column(name = "CITY_ID")

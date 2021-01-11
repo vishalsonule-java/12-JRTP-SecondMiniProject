@@ -1,15 +1,10 @@
 package com.ashokit.entity;
 
 import java.io.Serializable;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -18,6 +13,11 @@ import lombok.Data;
 @Entity
 @Table(name = "STATE_MASTER")
 public class State implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4094368058773481750L;
 
 	@Id
 	@GeneratedValue

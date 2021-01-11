@@ -1,6 +1,4 @@
 package com.ashokit.rest;
-
-import java.util.Date;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,20 +10,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ashokit.constant.AppConstant;
 import com.ashokit.entity.User;
+import com.ashokit.properties.AppPropeties;
 import com.ashokit.services.UserService;
 @RestController
 public class UserRegistrationRestController {
 	
 	@Autowired
 	private UserService userService;
-	/*
-	 * @GetMapping("/getUser") public ResponseEntity<User> getUser(){ User user=new
-	 * User(101, "vishal", "sonule", "vishalsonule2@gmail.com", "123", 9011349907l,
-	 * new Date(), "male", 1, 1, 1, "Locked"); return new
-	 * ResponseEntity<User>(user,HttpStatus.OK); }
-	 */
 	
+	@Autowired
+	private AppPropeties appProperties;
+	
+	
+			
 	@GetMapping("/getCountries")
 	public ResponseEntity<Map<Integer, String>> handleCountrySelectBox() {
 		return new ResponseEntity<Map<Integer, String>>(userService.getCountries(), HttpStatus.OK);
@@ -43,26 +42,32 @@ public class UserRegistrationRestController {
 	
 	@GetMapping("/validMail")
 	public ResponseEntity<String> checkMailValidation(@RequestParam("email") String email) {
-		return new ResponseEntity<String>(userService.isEmailUnique(email) ? "" : "Mail is Allready Register",
-				HttpStatus.OK);
+		
+		Map<String, String> properties = appProperties.getProperties();
+		
+		Boolean isValid=userService.isEmailUnique(email);
+		
+		if(isValid) {
+			
+			return new ResponseEntity<String>(properties.get(""),HttpStatus.OK);
+		}
+		else
+		return new ResponseEntity<String>(properties.get(AppConstant.INVALID_MAIL),HttpStatus.BAD_REQUEST);
 	}
 	
 	@PostMapping("/registration")
 	public ResponseEntity<String> handleRegistrationButton(@RequestBody User user) {
-		return new ResponseEntity<String>(
-				userService.registerUser(user) ? "Registration successfull" : "registration failed",
-				HttpStatus.CREATED);
-	}
-	
-	@PostMapping("/unlockAccount")
-	public ResponseEntity<String> handleUnLockAccountButton(@RequestParam("email") String email,
-			@RequestParam("tempPass") String tempPassword, @RequestParam("newPassword") String newPassword) {
-		return new ResponseEntity<String>(userService.unlockAccount(email, tempPassword, newPassword), HttpStatus.OK);
-	}
-
-	@PostMapping("/forgetPassword")
-	public ResponseEntity<String> handleForgetPasswordButton(@RequestParam("email") String email) {
-		return new ResponseEntity<String>(userService.recoverPassword(email) ? "Password is recoverd,please check mail"
-				: "Password is not recoverd,Please try again", HttpStatus.OK);
-	}
+		
+		Map<String, String> properties = appProperties.getProperties();
+		
+		Boolean isRegister=userService.registerUser(user);
+		
+		if(isRegister) {
+			
+			return new ResponseEntity<String>(properties.get(AppConstant.USER_REGISTRATION_SUCC),HttpStatus.CREATED);
+		}
+		else
+			
+		return new ResponseEntity<String>(properties.get(AppConstant.USER_REGISTRATION_FAIL),HttpStatus.BAD_REQUEST);
+	}	
 }

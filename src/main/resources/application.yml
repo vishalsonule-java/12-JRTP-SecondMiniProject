@@ -1,0 +1,34 @@
+app:
+  properties:
+    accAllReadyUnlock: Account is AllReady Unlcoked, please proceed with login
+    accLock: Your Account is Locked
+    accUnlockSucc: Account unlocked, please proceed with login
+    accUnlockFail: Account is not unlocked,please try Again
+    invalidMail: Email is invalid, Please Enter valid email
+    loginFail: Invalid User Credentials
+    loginSucc: Login successfully...!
+    mailUnique: Mail is Allready Register
+    passwordMisMatch: Confirm Password is not match,Please Enter both  password same
+    recoverPassFail: Password is not recoverd,Please try again
+    recoverPassSucc: Password is recoverd,please check mail
+    userRegistrationFail: registration failed
+    userRegistrationSucc: Registration successfully completed, Please check your email to unlock account
+server:
+  port: 7072
+spring:
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    password: manager
+    url: jdbc:oracle:thin:@localhost:1521:orcl
+    username: system
+  mail:
+    host: smtp.gmail.com
+    password: '0911349907'
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    username: vishalsonule2@gmail.com
